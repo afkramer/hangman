@@ -15,12 +15,17 @@ class Game
   end
 
   def play_game
+    display_introduction
     set_up_player
     continue_game = true
     while continue_game
       play_round
       continue_game = continue_game?
     end
+  end
+
+  def display_introduction
+    @gui.display_introduction
   end
 
   def set_up_player
