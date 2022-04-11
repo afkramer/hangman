@@ -29,7 +29,7 @@ class Game
   end
 
   def set_up_player
-    @player.name = gui.get_player_name
+    @player.name = @gui.get_player_name
   end
 
   def play_round
@@ -37,7 +37,7 @@ class Game
     @player.lives_left = %w[* * * * * *]
     while @player.lives_left.length.positive?
       @gui.display_game_state(correct_letters, lives_left)
-      guess = player.get_guess
+      guess = @player.get_guess
       process_guess(guess)
       break if game_won?
     end
