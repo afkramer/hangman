@@ -25,7 +25,7 @@ class Game
   end
   
   def set_up_player
-    # Call gui method to get the player name
+    @player.name = gui.get_player_name
   end
 
   def play_round
