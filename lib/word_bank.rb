@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# WordBank initializes a dictionary of possible words
+# Random words are provided for the game
 class WordBank
   def initialize
     @possible_words = load_possible_words
@@ -10,12 +12,15 @@ class WordBank
     if File.exist?(dict_location)
       contents = []
       File.open(dict_location, 'r') do |file|
-        until file.eof?
-          contents << file.readline.chomp
-        end
+        contents << file.readline.chomp until file.eof?
       end
       @possible_words = contents.select { |word| word.length >= 5 && word.length <= 12 }
     else
-      'Error loading words'
+      'No word bank available'
     end
   end
+
+  def choose_random_word
+    @possible_words.sample
+  end
+end
