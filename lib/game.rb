@@ -36,6 +36,7 @@ class Game
       process_guess(guess)
       break if game_won?
     end
+    end_game(@player.lives_left.length)
   end
 
   def set_up_word
@@ -58,6 +59,14 @@ class Game
 
   def game_won?
     # Check if there are no more nils left in @correct_letters
+  end
+
+  def end_game(lives_left)
+    if lives_left.positive?
+      @gui.display_game_won(@player.name, lives_left, @letters_in_word.join(''))
+    else
+      @gui.display_game_lost(@player.name, @letters_in_word.join(''))
+    end
   end
 
   def continue_game?

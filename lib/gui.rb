@@ -39,4 +39,15 @@ class Gui
     puts
     puts "Sorry, that's invalid input."
   end
+
+  def display_game_won(name, lives_left, word_to_guess)
+    puts
+    puts "Congratulations, #{name}! You figured out the word: #{word_to_guess}"
+    puts "You won with #{lives_left} lives left."
+  end
+
+  def display_game_lost(name, word_to_guess)
+    puts
+    puts "Sorry, #{name}, you lost. The word was: #{word_to_guess}"
+  end
 end
