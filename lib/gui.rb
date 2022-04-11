@@ -77,4 +77,9 @@ class Gui
     puts 'Would you like to play again?'
     print 'Enter y to continue, any other key to stop: '
   end
+
+  def display_something_went_wrong
+    puts
+    puts 'Sorry, something went wrong. Try again soon!'
+  end
 end

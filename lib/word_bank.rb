@@ -14,7 +14,7 @@ class WordBank
       File.open(dict_location, 'r') do |file|
         contents << file.readline.chomp until file.eof?
       end
-      @possible_words = contents.select { |word| word.length >= 5 && word.length <= 12 }
+      contents.select { |word| word.length >= 5 && word.length <= 12 }
     else
       'No word bank available'
     end
