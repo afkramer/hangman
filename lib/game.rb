@@ -71,7 +71,7 @@ class Game
   end
 
   def continue_game?
-    # Call gui method if the game should continue
-    # return true if user wants to continue, false if not
+    response = @gui.get_continue_game.downcase
+    response == 'y'
   end
 end

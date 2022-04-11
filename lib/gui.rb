@@ -50,4 +50,10 @@ class Gui
     puts
     puts "Sorry, #{name}, you lost. The word was: #{word_to_guess}"
   end
+
+  def get_continue_game
+    puts
+    puts "Would you like to play again?"
+    print "Enter y to continue, any other key to stop: "
+  end
 end
