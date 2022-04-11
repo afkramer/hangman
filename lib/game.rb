@@ -43,13 +43,17 @@ class Game
     # update correct_letters with nil for each letter in the word
   end
 
-  def process_guess(letter)
-    # check if the letter is in @letters_in_word
-      # If yes, add the letters in the appropriate spots to @correct_letters
-      # Use the GUI to tell the user their guess was successful
-    # if no
-      # use the GUI to tell the user they were unsuccessful
-      # take one life off (pop)
+  def process_guess(guess)
+    occurences = 0
+    @letters_in_word.each_with_index do |letter, index|
+      @correct_letters[index] = letter if letter == guess
+      occurences += 1
+    end
+    if occurences > 0
+      @gui.display_correct_answer(guess, occurences)
+    else
+      @gui.display_wrong_answer(guess)
+      @player.lives_left.pop
   end
 
   def game_won?
