@@ -31,7 +31,7 @@ class Game
     set_up_word
     @player.lives_left = %w[* * * * * *]
     while @player.lives_left.length.positive?
-      # Gui: display lives left and word to guess
+      @gui.display_game_state(correct_letters, lives_left)
       guess = player.get_guess
       process_guess(guess)
       break if game_won?
@@ -47,10 +47,10 @@ class Game
   def process_guess(guess)
     occurences = 0
     @letters_in_word.each_with_index do |letter, index|
-      @correct_letters[index] = letter if letter == guess
+      @correct_letters[index] = guess if letter == guess
       occurences += 1
     end
-    if occurences > 0
+    if occurences.positive?
       @gui.display_correct_answer(guess, occurences)
     else
       @gui.display_wrong_answer(guess)
@@ -59,7 +59,7 @@ class Game
   end
 
   def game_won?
-    # Check if there are no more nils left in @correct_letters
+    @correct_letters.none? { |element| element == '_' }
   end
 
   def end_game(lives_left)
