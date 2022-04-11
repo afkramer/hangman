@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './game'
+require './lib/game'
 
 def main
   game = Game.new

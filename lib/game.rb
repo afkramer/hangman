@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require './gui'
-require './player'
-require './word_bank'
+require './lib/gui'
+require './lib/player'
+require './lib/word_bank'
 
 # Contains methods for the game to run
 class Game
