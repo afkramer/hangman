@@ -9,7 +9,7 @@ class Player
     @name = ''
     @guesses = []
     @gui = Gui.new
-    @lives_left = 0
+    @lives_left = []
   end
 
   def get_guess

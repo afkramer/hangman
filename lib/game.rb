@@ -18,7 +18,7 @@ class Game
     set_up_player
     continue_game = true
     while continue_game
-      # play a round
+      play_round
       continue_game = continue_game?
     end
   end
@@ -29,11 +29,12 @@ class Game
 
   def play_round
     set_up_word
-    @player.lives_left = 6
-    while @lives_left > 0
+    @player.lives_left = %w[* * * * * *]
+    while @player.lives_left.length.positive?
       # Gui: display lives left and word to guess
-      # get guess from user
-      # check if the guess is in the word to guess
+      guess = player.get_guess
+      process_guess(guess)
+      break if game_won?
     end
   end
 
@@ -48,12 +49,15 @@ class Game
       # Use the GUI to tell the user their guess was successful
     # if no
       # use the GUI to tell the user they were unsuccessful
-      # take one life off
+      # take one life off (pop)
+  end
+
+  def game_won?
+    # Check if there are no more nils left in @correct_letters
   end
 
   def continue_game?
     # Call gui method if the game should continue
     # return true if user wants to continue, false if not
   end
-
 end
