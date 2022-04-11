@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
 # Player class contains methods for the human player
-
 class Player
-  attr_accessor :name, :lives_left
+  attr_accessor :name, :lives_left, :games_won, :games_lost
 
   def initialize
     @name = ''
     @guesses = []
     @gui = Gui.new
     @lives_left = []
+    @games_won = 0
+    @games_lost = 0
   end
 
   def get_guess

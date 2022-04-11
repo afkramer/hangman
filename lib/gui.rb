@@ -3,7 +3,16 @@
 # Contains the code for a command line
 class Gui
   def display_introduction
-    # Print an overview of how the game works
+    puts 'Welcome to Hangman!'
+    puts 'You know how this game works, just remember back to your childhood!'
+    puts 'Instead of displaying a hanged man, we will work with lives left.'
+    puts "It's less gruesome."
+    puts
+    puts "Sorry if you're disappointed that I didn't go through the hassle"
+    puts 'of figuring out how to print it out using characters in the console.'
+    puts
+    puts 'You have six tries to guess the word!'
+    puts 'In this version, proper names and places are also allowed!'
   end
 
   def get_player_name
@@ -51,9 +60,16 @@ class Gui
     puts "Sorry, #{name}, you lost. The word was: #{word_to_guess}"
   end
 
+  def display_game_statistics(name, games_won, games_lost)
+    puts
+    puts "#{name}, here are your statistics."
+    puts "Games won: #{games_won}"
+    puts "Games lost: #{games_lost}"
+  end
+
   def get_continue_game
     puts
-    puts "Would you like to play again?"
-    print "Enter y to continue, any other key to stop: "
+    puts 'Would you like to play again?'
+    print 'Enter y to continue, any other key to stop: '
   end
 end

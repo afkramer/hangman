@@ -64,10 +64,13 @@ class Game
 
   def end_game(lives_left)
     if lives_left.positive?
+      @games_won += 1
       @gui.display_game_won(@player.name, lives_left, @letters_in_word.join(''))
     else
+      @games_lost += 1
       @gui.display_game_lost(@player.name, @letters_in_word.join(''))
     end
+    @gui.display_game_statistics(@player.name, @player.games_won, @player.games_lost)
   end
 
   def continue_game?
