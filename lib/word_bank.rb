@@ -8,12 +8,15 @@ class WordBank
   end
 
   def load_possible_words
-    dict_location = 'google-10000-english-no-swears.txt'
+    puts "got this far"
+    dict_location = '../google-10000-english-no-swears.txt'
     if File.exist?(dict_location)
+      puts "file exists"
       contents = []
       File.open(dict_location, 'r') do |file|
         contents << file.readline.chomp until file.eof?
       end
+      puts "Length of the file: #{contents.length}"
       contents.select { |word| word.length >= 5 && word.length <= 12 }
     else
       'No word bank available'
