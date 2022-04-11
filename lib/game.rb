@@ -10,7 +10,6 @@ class Game
     @player = Player.new
     @word_bank = WordBank.new
     @gui = Gui.new
-    @lives_left = 6
     @letters_in_word = []
     @correct_letters = []
   end
@@ -23,13 +22,14 @@ class Game
       continue_game = continue_game?
     end
   end
-  
+
   def set_up_player
     @player.name = gui.get_player_name
   end
 
   def play_round
     set_up_word
+    @player.lives_left = 6
     while @lives_left > 0
       # Gui: display lives left and word to guess
       # get guess from user

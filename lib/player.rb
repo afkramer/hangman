@@ -3,12 +3,13 @@
 # Player class contains methods for the human player
 
 class Player
-  attr_accessor :name
+  attr_accessor :name, :lives_left
 
   def initialize
     @name = ''
     @guesses = []
     @gui = Gui.new
+    @lives_left = 0
   end
 
   def get_guess
