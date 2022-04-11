@@ -15,7 +15,10 @@ class Player
 
   def get_guess
     guess = gui.get_guess.downcase
-    if /[a-z]/.match?(guess) && guess.length == 1 && !@guesses.include?(guess)
+    if @guesses.include?(guess)
+      gui.display_already_guessed(guess)
+      get_guess
+    elsif /[a-z]/.match?(guess) && guess.length == 1
       @guesses << guess
       guess
     else

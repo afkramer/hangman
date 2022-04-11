@@ -44,6 +44,11 @@ class Gui
     puts "Sorry, there are no occurences of #{guess}."
   end
 
+  def display_already_guessed(guess)
+    puts
+    puts "You already guessed #{guess}"
+  end
+
   def invalid_input
     puts
     puts "Sorry, that's invalid input."
