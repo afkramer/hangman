@@ -19,7 +19,10 @@ class Game
     set_up_player
     continue_game = true
     while continue_game
-      play_round
+      if play_round == 'error'
+        @gui.display_something_went_wrong
+        break
+      end
       continue_game = continue_game?
     end
   end
@@ -33,7 +36,10 @@ class Game
   end
 
   def play_round
-    set_up_word
+    if set_up_word == 'error'
+      return 'error'
+    end
+
     @player.lives_left = %w[* * * * * *]
     while @player.lives_left.length.positive?
       @gui.display_game_state(correct_letters, lives_left)
@@ -45,8 +51,12 @@ class Game
   end
 
   def set_up_word
-    @letters_in_word = @word_bank.choose_random_word.split('')
-    @letters_in_word.each { @correct_letters << '_' }
+    if @word_bank.is_a?(Array)
+      @letters_in_word = @word_bank.choose_random_word.split('')
+      @letters_in_word.each { @correct_letters << '_' }
+    else
+      'error'
+    end
   end
 
   def process_guess(guess)
