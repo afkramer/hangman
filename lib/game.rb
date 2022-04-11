@@ -40,8 +40,8 @@ class Game
   end
 
   def set_up_word
-    # get a new word to guess from the gui and save to @letters_in_word
-    # update correct_letters with nil for each letter in the word
+    @letters_in_word = @word_bank.choose_random_word.split('')
+    @letters_in_word.each { @correct_letters << '_' }
   end
 
   def process_guess(guess)
@@ -55,6 +55,7 @@ class Game
     else
       @gui.display_wrong_answer(guess)
       @player.lives_left.pop
+    end
   end
 
   def game_won?
