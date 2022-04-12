@@ -42,16 +42,16 @@ class Game
 
     @player.lives_left = %w[* * * * * *]
     while @player.lives_left.length.positive?
-      @gui.display_game_state(correct_letters, lives_left)
+      @gui.display_game_state(@correct_letters, @player.lives_left)
       guess = @player.get_guess
       process_guess(guess)
       break if game_won?
     end
-    end_game(@player.lives_left.length)
+    end_game
   end
 
   def set_up_word
-    if @word_bank.is_a?(Array)
+    if @word_bank.possible_words.is_a?(Array)
       @letters_in_word = @word_bank.choose_random_word.split('')
       @letters_in_word.each { @correct_letters << '_' }
     else
@@ -62,8 +62,10 @@ class Game
   def process_guess(guess)
     occurences = 0
     @letters_in_word.each_with_index do |letter, index|
-      @correct_letters[index] = guess if letter == guess
-      occurences += 1
+      if letter == guess
+        @correct_letters[index] = guess
+        occurences += 1
+      end
     end
     if occurences.positive?
       @gui.display_correct_answer(guess, occurences)
@@ -77,12 +79,12 @@ class Game
     @correct_letters.none? { |element| element == '_' }
   end
 
-  def end_game(lives_left)
-    if lives_left.positive?
-      @games_won += 1
-      @gui.display_game_won(@player.name, lives_left, @letters_in_word.join(''))
+  def end_game
+    if @player.lives_left.length.positive?
+      @player.games_won += 1
+      @gui.display_game_won(@player.name, @player.lives_left.length., @letters_in_word.join(''))
     else
-      @games_lost += 1
+      @player.games_lost += 1
       @gui.display_game_lost(@player.name, @letters_in_word.join(''))
     end
     @gui.display_game_statistics(@player.name, @player.games_won, @player.games_lost)

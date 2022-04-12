@@ -3,6 +3,8 @@
 # Contains the code for a command line
 class Gui
   def display_introduction
+    puts
+    puts
     puts 'Welcome to Hangman!'
     puts 'You know how this game works, just remember back to your childhood!'
     puts 'Instead of displaying a hanged man, we will work with lives left.'

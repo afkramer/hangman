@@ -3,20 +3,19 @@
 # WordBank initializes a dictionary of possible words
 # Random words are provided for the game
 class WordBank
+  attr_reader :possible_words
+
   def initialize
     @possible_words = load_possible_words
   end
 
   def load_possible_words
-    puts "got this far"
-    dict_location = '../google-10000-english-no-swears.txt'
+    dict_location = 'google-10000-english-no-swears.txt'
     if File.exist?(dict_location)
-      puts "file exists"
       contents = []
       File.open(dict_location, 'r') do |file|
         contents << file.readline.chomp until file.eof?
       end
-      puts "Length of the file: #{contents.length}"
       contents.select { |word| word.length >= 5 && word.length <= 12 }
     else
       'No word bank available'
