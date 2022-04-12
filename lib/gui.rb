@@ -40,9 +40,11 @@ class Gui
   end
 
   def display_correct_answer(guess, number_found)
+    len = guess.length
     puts
     puts
-    puts "Yes! There where #{number_found} occurences of #{guess}!"
+    print "Yes! There #{len == 1 ? 'was' : 'were' }"
+    puts " #{number_found} occurence#{'s' if len > 1} of #{guess}!"
   end
 
   def display_wrong_answer(guess)
@@ -53,6 +55,7 @@ class Gui
     else
       puts "Sorry, the word is not #{guess}"
     end
+    puts 'You lose one life.'
   end
 
   def display_already_guessed(guess)
@@ -94,6 +97,12 @@ class Gui
     puts 'Would you like to play again?'
     print 'Enter y to continue, any other key to stop: '
     gets.chomp
+  end
+
+  def display_thanks_for_playing
+    puts
+    puts
+    puts 'Thanks for playing!'
   end
 
   def display_something_went_wrong

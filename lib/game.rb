@@ -25,6 +25,7 @@ class Game
       end
       continue_game = continue_game?
     end
+    @gui.display_thanks_for_playing
   end
 
   def display_introduction
