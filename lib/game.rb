@@ -60,6 +60,14 @@ class Game
   end
 
   def process_guess(guess)
+    guess_type(guess) == 'word' ? process_word(guess) : process_letter(guess)
+  end
+
+  def guess_type(guess)
+    guess.length > 1 ? 'word' : 'letter'
+  end
+
+  def process_letter(guess)
     occurences = 0
     @letters_in_word.each_with_index do |letter, index|
       if letter == guess
@@ -67,6 +75,20 @@ class Game
         occurences += 1
       end
     end
+    show_right_or_wrong(guess, occurences)
+  end
+
+  def process_word(guess)
+    # If the guess is correct then the game won message should be shown
+    puts "guess: #{guess}  @letters_in_word: #{@letters_in_word.join('')}"
+    if guess == @letters_in_word.join('')
+      @correct_letters = guess.split('')
+    else
+      show_right_or_wrong(guess, 0)
+    end
+  end
+
+  def show_right_or_wrong(guess, occurences)
     if occurences.positive?
       @gui.display_correct_answer(guess, occurences)
     else
@@ -82,7 +104,7 @@ class Game
   def end_game
     if @player.lives_left.length.positive?
       @player.games_won += 1
-      @gui.display_game_won(@player.name, @player.lives_left.length., @letters_in_word.join(''))
+      @gui.display_game_won(@player.name, @player.lives_left.length, @letters_in_word.join(''))
     else
       @player.games_lost += 1
       @gui.display_game_lost(@player.name, @letters_in_word.join(''))

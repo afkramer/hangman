@@ -18,7 +18,7 @@ class Player
     if @guesses.include?(guess)
       @gui.display_already_guessed(guess)
       get_guess
-    elsif /[a-z]/.match?(guess) && guess.length == 1
+    elsif /[a-z]/.match?(guess)
       @guesses << guess
       guess
     else
