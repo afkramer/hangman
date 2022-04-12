@@ -36,6 +36,7 @@ class Game
   end
 
   def play_round
+    reset_words
     if set_up_word == 'error'
       return 'error'
     end
@@ -48,6 +49,12 @@ class Game
       break if game_won?
     end
     end_game
+  end
+
+  def reset_words
+    @letters_in_word = []
+    @correct_letters = []
+    @player.reset_guesses
   end
 
   def set_up_word
@@ -80,7 +87,6 @@ class Game
 
   def process_word(guess)
     # If the guess is correct then the game won message should be shown
-    puts "guess: #{guess}  @letters_in_word: #{@letters_in_word.join('')}"
     if guess == @letters_in_word.join('')
       @correct_letters = guess.split('')
     else

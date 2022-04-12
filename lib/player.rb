@@ -13,6 +13,10 @@ class Player
     @games_lost = 0
   end
 
+  def reset_guesses
+    @guesses = []
+  end
+
   def get_guess
     guess = @gui.get_guess(@name).downcase
     if @guesses.include?(guess)
