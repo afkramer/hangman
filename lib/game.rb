@@ -44,7 +44,7 @@ class Game
 
     @player.lives_left = %w[* * * * * *]
     while @player.lives_left.length.positive?
-      @gui.display_game_state(@correct_letters, @player.lives_left)
+      @gui.display_game_state(@correct_letters, @player.incorrect_guesses, @player.lives_left)
       guess = @player.get_guess
       process_guess(guess)
       break if game_won?
@@ -98,9 +98,11 @@ class Game
   def show_right_or_wrong(guess, occurences)
     if occurences.positive?
       @gui.display_correct_answer(guess, occurences)
+      @player.correct_guesses << guess
     else
       @gui.display_wrong_answer(guess)
       @player.lives_left.pop
+      @player.incorrect_guesses << guess
     end
   end
 

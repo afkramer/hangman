@@ -2,11 +2,12 @@
 
 # Player class contains methods for the human player
 class Player
-  attr_accessor :name, :lives_left, :games_won, :games_lost
+  attr_accessor :name, :lives_left, :games_won, :games_lost, :correct_guesses, :incorrect_guesses
 
   def initialize
     @name = ''
-    @guesses = []
+    @incorrect_guesses = []
+    @correct_guesses = []
     @gui = Gui.new
     @lives_left = []
     @games_won = 0
@@ -14,16 +15,16 @@ class Player
   end
 
   def reset_guesses
-    @guesses = []
+    @incorrect_guesses = []
+    @correct_guesses = []
   end
 
   def get_guess
     guess = @gui.get_guess(@name).downcase
-    if @guesses.include?(guess)
+    if @incorrect_guesses.include?(guess) || @correct_guesses.include?(guess)
       @gui.display_already_guessed(guess)
       get_guess
     elsif /[a-z]/.match?(guess)
-      @guesses << guess
       guess
     else
       @gui.invalid_input

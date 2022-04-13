@@ -10,9 +10,6 @@ class Gui
     puts 'Instead of displaying a hanged man, we will work with lives left.'
     puts "It's less gruesome."
     puts
-    puts "Sorry if you're disappointed that I didn't go through the hassle"
-    puts 'of figuring out how to print it out using characters in the console.'
-    puts
     puts 'You have six tries to guess the word!'
     puts 'In this version, proper names and places are also allowed!'
   end
@@ -24,10 +21,17 @@ class Gui
     gets.chomp
   end
 
-  def display_game_state(correct_letters, lives_left)
+  def display_game_state(correct_letters, guesses, lives_left)
+    words = []
+    letters = []
+    guesses.each { |guess| guess.length == 1 ? letters << guess : words << guess }
     puts
     puts
     puts "Lives left: #{lives_left.join(' ')}"
+    puts
+    puts "Letters guessed: #{letters.join(', ') if letters.length >= 1}"
+    puts
+    puts "Words guessed: #{words.join(', ') if letters.length >= 1}"
     puts
     puts "Word to guess: #{correct_letters.join(' ')}"
   end
@@ -41,15 +45,26 @@ class Gui
 
   def display_correct_answer(guess, number_found)
     len = guess.length
-    puts
-    puts
+    display_extra_space
     print "Yes! There #{len == 1 ? 'was' : 'were' }"
     puts " #{number_found} occurence#{'s' if len > 1} of #{guess}!"
   end
 
+  def display_extra_space
+    puts
+    puts
+    puts
+    puts
+    puts
+    puts
+    puts
+    puts
+    puts
+    puts
+  end
+
   def display_wrong_answer(guess)
-    puts
-    puts
+    display_extra_space
     if guess.length == 1
       puts "Sorry, there are no occurences of #{guess}."
     else
