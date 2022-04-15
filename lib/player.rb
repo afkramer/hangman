@@ -18,14 +18,6 @@ class Player
     @games_lost = 0
   end
 
-  def save_player
-    # write to a file
-  end
-
-  def load_player
-    # retrieve the player from the file
-  end
-
   def to_json
     JSON.dump({
                 name: @name,

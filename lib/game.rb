@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'json'
 require './lib/gui'
 require './lib/player'
 require './lib/word_bank'
@@ -30,6 +31,37 @@ class Game
 
   def display_introduction
     @gui.display_introduction
+  end
+
+  def save_game
+    # Save the game state to a file
+    # Check if the saved_games directory exists
+    # User has the option to give their game a name
+    # Pack the game and player into an array
+    # Write the array to a file
+    # Close the file
+  end
+
+  def load_game
+    # Load a previous game
+    # Get the name of the file from the user
+    # Check if the file exists, if not ask again
+    # Allow the user to just play a new game instead
+    # If the file exists, load the string
+    # Use each element of the array to reconstruct the game
+  end
+
+  def to_json
+    JSON.dump({
+                letters_in_word: @letters_in_word,
+                correct_letters: @correct_letters
+              })
+  end
+
+  def from_json(string)
+    data = JSON.parse(string)
+    @letters_in_word = data['letters_in_word']
+    @correct_letters = data['correct_letters']
   end
 
   def set_up_player
