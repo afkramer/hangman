@@ -7,6 +7,8 @@ require './lib/word_bank'
 
 # Contains methods for the game to run
 class Game
+  attr_accessor :letters_in_word, :correct_letters, :player # remove after testing!
+
   def initialize
     @player = Player.new
     @word_bank = WordBank.new
@@ -35,20 +37,22 @@ class Game
 
   def save_game
     dir = './saved_games'
-    unless Dir.exist?(dir) 
+    unless Dir.exist?(dir)
       Dir.mkdir(dir)
     end
-    file = get_file_name_for_save(dir)
-    file.puts([self.to_json, @player.to_json])
-    file.close
+    filepath = get_file_name_for_save(dir)
+    data = "#{to_json}\t#{@player.to_json}"
+    p data
+    File.open(filepath, 'w') { |file| file.puts(data)}
   end
 
   def get_file_name_for_save(dir)
     file = @gui.get_save_file_name
-    while File.exist?(dir + "/" + file)
+    while File.exist?("#{dir}/#{file}")
       @gui.display_file_in_use
       file = @gui.get_save_file_name
     end
+    "#{dir}/#{file}"
   end
 
   def load_game
@@ -61,6 +65,7 @@ class Game
   end
 
   def get_file_name_for_load(dir)
+  end
 
   def to_json
     JSON.dump({
@@ -169,3 +174,15 @@ class Game
     response == 'y'
   end
 end
+
+
+game = Game.new
+game.player.name = 'Norma'
+game.player.incorrect_guesses = %w[a b c d]
+game.player.correct_guesses = %w[e f g h]
+game.player.lives_left = %w[* * * *]
+game.player.games_won = 3
+game.player.games_lost = 5
+game.letters_in_word = %w[c a r r o t]
+game.correct_letters = %w[c a _ _ _ _]
+game.save_game
