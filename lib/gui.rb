@@ -12,6 +12,15 @@ class Gui
     puts
     puts 'You have six tries to guess the word!'
     puts 'In this version, proper names and places are also allowed!'
+    puts
+    puts 'Type "save" at any point in the game to stop and save your game.'
+  end
+
+  def get_load_game
+    puts
+    puts 'Would you like to load a previous game?'
+    print 'Type y to load, any other key to start new game: '
+    gets.chomp
   end
 
   def get_player_name

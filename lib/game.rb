@@ -19,7 +19,6 @@ class Game
 
   def play_game
     display_introduction
-    set_up_player
     continue_game = true
     while continue_game
       if play_round == 'error'
@@ -98,16 +97,19 @@ class Game
   end
 
   def play_round
-    reset_words
-    if set_up_word == 'error'
-      return 'error'
+    if @gui.get_load_game.downcase == 'y'
+      load_game
+    else
+      set_up_player if @player.name == ''
+      @player.lives_left = %w[* * * * * *]
+      reset_words
+      return 'error' if set_up_word == 'error'
     end
 
-    @player.lives_left = %w[* * * * * *]
     while @player.lives_left.length.positive?
       @gui.display_game_state(@correct_letters, @player.incorrect_guesses, @player.lives_left)
       guess = @player.get_guess
-      process_guess(guess)
+      break if process_guess(guess) == 'save'
       break if game_won?
     end
     end_game
@@ -149,7 +151,10 @@ class Game
 
   def process_word(guess)
     # If the guess is correct then the game won message should be shown
-    if guess == @letters_in_word.join('')
+    if guess == 'save'
+      save_game
+      'save'
+    elsif guess == @letters_in_word.join('')
       @correct_letters = guess.split('')
     else
       show_right_or_wrong(guess, 0)
@@ -172,6 +177,8 @@ class Game
   end
 
   def end_game
+    return if @player.lives_left.length.positive? && @correct_letters.include?('_')
+
     if @player.lives_left.length.positive?
       @player.games_won += 1
       @gui.display_game_won(@player.name, @player.lives_left.length, @letters_in_word.join(''))
@@ -189,24 +196,24 @@ class Game
 end
 
 
-game = Game.new
-game.player.name = 'Norma'
-game.player.incorrect_guesses = %w[a b c d]
-game.player.correct_guesses = %w[e f g h]
-game.player.lives_left = %w[* * * *]
-game.player.games_won = 3
-game.player.games_lost = 5
-game.letters_in_word = %w[c a r r o t]
-game.correct_letters = %w[c a _ _ _ _]
-game.save_game
+# game = Game.new
+# game.player.name = 'Norma'
+# game.player.incorrect_guesses = %w[a b c d]
+# game.player.correct_guesses = %w[e f g h]
+# game.player.lives_left = %w[* * * *]
+# game.player.games_won = 3
+# game.player.games_lost = 5
+# game.letters_in_word = %w[c a r r o t]
+# game.correct_letters = %w[c a _ _ _ _]
+# game.save_game
 
-game2 = Game.new
-game2.load_game
-p game2.letters_in_word
-p game2.correct_letters
-puts game2.player.name
-p game2.player.incorrect_guesses
-p game2.player.correct_guesses
-p game2.player.lives_left
-puts game2.player.games_won
-puts game2.player.games_lost
+# game2 = Game.new
+# game2.load_game
+# p game2.letters_in_word
+# p game2.correct_letters
+# puts game2.player.name
+# p game2.player.incorrect_guesses
+# p game2.player.correct_guesses
+# p game2.player.lives_left
+# puts game2.player.games_won
+# puts game2.player.games_lost
