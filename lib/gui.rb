@@ -114,6 +114,21 @@ class Gui
     gets.chomp
   end
 
+  def get_save_file_name
+    puts
+    puts
+    print 'Please enter a file name: '
+    gets.chomp
+  end
+
+  def display_file_in_use
+    puts
+    puts
+    puts 'That file name is already in use.'
+    puts 'Please enter a different name.'
+  end
+
+
   def display_thanks_for_playing
     puts
     puts

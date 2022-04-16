@@ -34,12 +34,21 @@ class Game
   end
 
   def save_game
-    # Save the game state to a file
-    # Check if the saved_games directory exists
-    # User has the option to give their game a name
-    # Pack the game and player into an array
-    # Write the array to a file
-    # Close the file
+    dir = './saved_games'
+    unless Dir.exist?(dir) 
+      Dir.mkdir(dir)
+    end
+    file = get_file_name_for_save(dir)
+    file.puts([self.to_json, @player.to_json])
+    file.close
+  end
+
+  def get_file_name_for_save(dir)
+    file = @gui.get_save_file_name
+    while File.exist?(dir + "/" + file)
+      @gui.display_file_in_use
+      file = @gui.get_save_file_name
+    end
   end
 
   def load_game
@@ -50,6 +59,8 @@ class Game
     # If the file exists, load the string
     # Use each element of the array to reconstruct the game
   end
+
+  def get_file_name_for_load(dir)
 
   def to_json
     JSON.dump({
