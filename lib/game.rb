@@ -40,13 +40,13 @@ class Game
     unless Dir.exist?(dir)
       Dir.mkdir(dir)
     end
-    filepath = get_file_name_for_save(dir)
+    filepath = get_file_path_for_save(dir)
     data = "#{to_json}\t#{@player.to_json}"
-    p data
     File.open(filepath, 'w') { |file| file.puts(data)}
+    @gui.display_game_saved
   end
 
-  def get_file_name_for_save(dir)
+  def get_file_path_for_save(dir)
     file = @gui.get_save_file_name
     while File.exist?("#{dir}/#{file}")
       @gui.display_file_in_use
@@ -57,14 +57,27 @@ class Game
 
   def load_game
     # Load a previous game
-    # Get the name of the file from the user
-    # Check if the file exists, if not ask again
-    # Allow the user to just play a new game instead
-    # If the file exists, load the string
-    # Use each element of the array to reconstruct the game
+    dir = './saved_games'
+    unless Dir.exist?(dir)
+      @gui.display_folder_gone
+      return 0
+      # TODO: make sure the player can still play a round
+    end
+    filepath = get_file_path_for_load(dir)
+    data = File.open(filepath, 'r').readline.split("\t")
+    from_json(data[0])
+    @player.from_json(data[1])
+    @gui.display_game_loaded
   end
 
-  def get_file_name_for_load(dir)
+  def get_file_path_for_load(dir)
+    file = @gui.get_load_file_name
+    until File.exist?("#{dir}/#{file}")
+      @gui.display_file_not_found
+      file = @gui.get_load_file_name
+      # user has to have the option to abort if the file doesn't exist
+    end
+    "#{dir}/#{file}"
   end
 
   def to_json
@@ -186,3 +199,14 @@ game.player.games_lost = 5
 game.letters_in_word = %w[c a r r o t]
 game.correct_letters = %w[c a _ _ _ _]
 game.save_game
+
+game2 = Game.new
+game2.load_game
+p game2.letters_in_word
+p game2.correct_letters
+puts game2.player.name
+p game2.player.incorrect_guesses
+p game2.player.correct_guesses
+p game2.player.lives_left
+puts game2.player.games_won
+puts game2.player.games_lost

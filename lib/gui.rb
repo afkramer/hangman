@@ -117,7 +117,7 @@ class Gui
   def get_save_file_name
     puts
     puts
-    print 'Please enter a file name: '
+    print 'Please enter a file name to save your game: '
     gets.chomp
   end
 
@@ -128,6 +128,36 @@ class Gui
     puts 'Please enter a different name.'
   end
 
+  def display_game_saved
+    puts
+    puts
+    puts 'Game saved.'
+  end
+
+  def display_folder_gone
+    puts
+    puts
+    puts 'Sorry, but someone has deleted the folder with the saved games :('
+  end
+
+  def get_load_file_name
+    puts
+    puts
+    print "Enter the filename of a game you'd like to load: "
+    gets.chomp
+  end
+
+  def display_file_not_found
+    puts
+    puts
+    puts "Sorry, that file name doesn't exist."
+  end
+
+  def display_game_loaded
+    puts
+    puts
+    puts 'Game loaded.'
+  end
 
   def display_thanks_for_playing
     puts
